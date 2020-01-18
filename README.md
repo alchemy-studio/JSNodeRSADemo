@@ -1,3 +1,8 @@
+相关library：
+
+- https://github.com/rzcoder/node-rsa
+- https://github.com/JoshKaufman/ursa
+
 ```bash
 $ yarn init
 yarn init v1.21.1
