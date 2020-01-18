@@ -32,10 +32,6 @@ const key = new nodeRSA("-----BEGIN RSA PRIVATE KEY-----\n" +
     "+0gaQ79zhrEJPZvOY/unSagkrLb8wU8pzD5MPk8dJD6utz7kQvk=\n" +
     "-----END RSA PRIVATE KEY-----");
 
-// 查看钥匙对
-console.log(key.keyPair);
-console.log("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
-
 // 从私钥推导出公钥
 // $ openssl rsa -in foo.key -pubout > foo.pub
 const pubKey = new nodeRSA("-----BEGIN PUBLIC KEY-----\n" +
@@ -49,25 +45,23 @@ const pubKey = new nodeRSA("-----BEGIN PUBLIC KEY-----\n" +
     "-----END PUBLIC KEY-----");
 
 // 公钥加密
-let encrypted = key.encrypt("Hello, world!");
+console.log("<><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+console.log("<> Encrypted: Hello, world!");
+let encrypted = pubKey.encrypt("Hello, world!");
 console.log(encrypted.toJSON());
-console.log("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
+console.log("\n\n\n");
 
 // 私钥解密
+console.log("<><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+console.log("<> Decrypted: Hello, world!");
 let decrypted = key.decrypt(encrypted);
 console.log(decrypted.toJSON());
 console.log(decrypted.toString('hex'));
 console.log(decrypted.toString());
-console.log("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
+console.log("\n\n\n");
 
-// 独立出来的公钥加密
-let encrypted2 = pubKey.encrypt("Hello, Martian!");
-console.log(encrypted2.toJSON());
-console.log("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
-
-// 私钥解密
-let decrypted2 = key.decrypt(encrypted2);
-console.log(decrypted2.toJSON());
-console.log(decrypted2.toString('hex'));
-console.log(decrypted2.toString());
-console.log("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
+// 查看钥匙对
+console.log("<><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+console.log("<> KeyPair");
+console.log(key.keyPair);
+console.log("\n\n\n");
