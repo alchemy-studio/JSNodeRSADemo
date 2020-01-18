@@ -1,0 +1,11 @@
+{
+  "name": "JSNodeRSADemo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:alchemy-studio/JSNodeRSADemo.git",
+  "author": "阿男 <l.weinan@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-rsa": "^1.0.7"
+  }
+}
