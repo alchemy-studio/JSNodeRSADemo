@@ -1,7 +1,14 @@
-相关library：
+## 相关library
 
 - https://github.com/rzcoder/node-rsa
 - https://github.com/JoshKaufman/ursa
+
+
+## 只生成key不生成证书的方法
+
+- https://developers.yubico.com/PIV/Guides/Generating_keys_using_OpenSSL.html
+
+## 项目生成过程：
 
 ```bash
 $ yarn init
