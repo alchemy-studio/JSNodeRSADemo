@@ -1,5 +1,15 @@
 const rs = require('jsrsasign');
 
+
+const split2 = (origin) => {
+    let array = origin.split("");
+    let result = [];
+    for (let i = 0; i < array.length - 1; i += 2) {
+        result[i] = array[i] + array[i + 1];
+    }
+    return result.filter(Boolean);
+};
+
 let pubKey = rs.KEYUTIL.getKey("-----BEGIN PUBLIC KEY-----\n" +
     "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxSWnxllXurPO0YnD2dBW\n" +
     "lPTzVhWAPJ1m/yloUyiDm3HUd5xrUm3Lb75B0OYfbUkHig4hsfva6AP1HlIMlwIX\n" +
@@ -14,7 +24,7 @@ let pubKey = rs.KEYUTIL.getKey("-----BEGIN PUBLIC KEY-----\n" +
 let encrypted = rs.KJUR.crypto.Cipher.encrypt("Hello, world!", pubKey);
 
 console.log("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
-console.log(encrypted);
+console.log(split2(encrypted));
 console.log("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 
 let key = rs.KEYUTIL.getKey("-----BEGIN RSA PRIVATE KEY-----\n" +
@@ -49,9 +59,5 @@ let key = rs.KEYUTIL.getKey("-----BEGIN RSA PRIVATE KEY-----\n" +
 
 let decrypted = rs.KJUR.crypto.Cipher.decrypt(encrypted, key);
 console.log(decrypted);
-
-
-
-
 
 
