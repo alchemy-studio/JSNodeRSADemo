@@ -6,6 +6,7 @@
   "author": "阿男 <l.weinan@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "aes-js": "^3.1.2",
     "jsrsasign": "^8.0.12",
     "node-rsa": "^1.0.7"
   }
