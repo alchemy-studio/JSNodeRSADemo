@@ -9,10 +9,13 @@ let pubKey = rs.KEYUTIL.getKey("-----BEGIN PUBLIC KEY-----\n" +
     "QEUug22o04sU1WhLnl+bNDsLNzHU+dK31ddXYNKZpywauQcA1qaHAFVRGy8OlU9n\n" +
     "swIDAQAB\n" +
     "-----END PUBLIC KEY-----");
-console.log(pubKey);
+// console.log(pubKey);
 
 let encrypted = rs.KJUR.crypto.Cipher.encrypt("Hello, world!", pubKey);
+
+console.log("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 console.log(encrypted);
+console.log("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 
 let key = rs.KEYUTIL.getKey("-----BEGIN RSA PRIVATE KEY-----\n" +
     "MIIEogIBAAKCAQEAxSWnxllXurPO0YnD2dBWlPTzVhWAPJ1m/yloUyiDm3HUd5xr\n" +
@@ -42,7 +45,7 @@ let key = rs.KEYUTIL.getKey("-----BEGIN RSA PRIVATE KEY-----\n" +
     "+0gaQ79zhrEJPZvOY/unSagkrLb8wU8pzD5MPk8dJD6utz7kQvk=\n" +
     "-----END RSA PRIVATE KEY-----");
 
-console.log(key);
+// console.log(key);
 
 let decrypted = rs.KJUR.crypto.Cipher.decrypt(encrypted, key);
 console.log(decrypted);
