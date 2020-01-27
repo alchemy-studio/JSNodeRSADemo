@@ -1,10 +1,33 @@
-nodeRSA = require("node-rsa");
+const rs = require('jsrsasign');
 
-// 生成不需要密码的钥匙对
-// https://serverfault.com/questions/366372/is-it-possible-to-generate-rsa-key-without-pass-phrase
-// $ openssl genrsa -out key.pem 2048
-// 得到私钥
-const key = new nodeRSA("-----BEGIN RSA PRIVATE KEY-----\n" +
+
+const split2 = (origin) => {
+    let array = origin.split("");
+    let result = [];
+    for (let i = 0; i < array.length - 1; i += 2) {
+        result[i] = array[i] + array[i + 1];
+    }
+    return result.filter(Boolean);
+};
+
+let pubKey = rs.KEYUTIL.getKey("-----BEGIN PUBLIC KEY-----\n" +
+    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxSWnxllXurPO0YnD2dBW\n" +
+    "lPTzVhWAPJ1m/yloUyiDm3HUd5xrUm3Lb75B0OYfbUkHig4hsfva6AP1HlIMlwIX\n" +
+    "FLoRjR80C/fHySELG+uOBv+wbQh/l8UhL4NTM7IUmWCxKsaSWiA/39GH2MVSS8CA\n" +
+    "lY4eCVcAadfE9bXY/akEgEvwzJUof1+HLFhQR9ECkLaKfsZMUY2CsZ+g4hRMqrf2\n" +
+    "71Hk18ikMGjk2JP1KD4JibWep8ZEzpbN7AuztY9DE4BsV4S3Q2/ncvmUufHGd2QE\n" +
+    "QEUug22o04sU1WhLnl+bNDsLNzHU+dK31ddXYNKZpywauQcA1qaHAFVRGy8OlU9n\n" +
+    "swIDAQAB\n" +
+    "-----END PUBLIC KEY-----");
+// console.log(pubKey);
+
+let encrypted = rs.KJUR.crypto.Cipher.encrypt("Hello, world!", pubKey);
+
+console.log("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+console.log(split2(encrypted));
+console.log("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+
+let key = rs.KEYUTIL.getKey("-----BEGIN RSA PRIVATE KEY-----\n" +
     "MIIEogIBAAKCAQEAxSWnxllXurPO0YnD2dBWlPTzVhWAPJ1m/yloUyiDm3HUd5xr\n" +
     "Um3Lb75B0OYfbUkHig4hsfva6AP1HlIMlwIXFLoRjR80C/fHySELG+uOBv+wbQh/\n" +
     "l8UhL4NTM7IUmWCxKsaSWiA/39GH2MVSS8CAlY4eCVcAadfE9bXY/akEgEvwzJUo\n" +
@@ -32,36 +55,9 @@ const key = new nodeRSA("-----BEGIN RSA PRIVATE KEY-----\n" +
     "+0gaQ79zhrEJPZvOY/unSagkrLb8wU8pzD5MPk8dJD6utz7kQvk=\n" +
     "-----END RSA PRIVATE KEY-----");
 
-// 从私钥推导出公钥
-// $ openssl rsa -in foo.key -pubout > foo.pub
-const pubKey = new nodeRSA("-----BEGIN PUBLIC KEY-----\n" +
-    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxSWnxllXurPO0YnD2dBW\n" +
-    "lPTzVhWAPJ1m/yloUyiDm3HUd5xrUm3Lb75B0OYfbUkHig4hsfva6AP1HlIMlwIX\n" +
-    "FLoRjR80C/fHySELG+uOBv+wbQh/l8UhL4NTM7IUmWCxKsaSWiA/39GH2MVSS8CA\n" +
-    "lY4eCVcAadfE9bXY/akEgEvwzJUof1+HLFhQR9ECkLaKfsZMUY2CsZ+g4hRMqrf2\n" +
-    "71Hk18ikMGjk2JP1KD4JibWep8ZEzpbN7AuztY9DE4BsV4S3Q2/ncvmUufHGd2QE\n" +
-    "QEUug22o04sU1WhLnl+bNDsLNzHU+dK31ddXYNKZpywauQcA1qaHAFVRGy8OlU9n\n" +
-    "swIDAQAB\n" +
-    "-----END PUBLIC KEY-----");
+// console.log(key);
 
-// 公钥加密
-console.log("<><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
-console.log("<> Encrypted: Hello, world!");
-let encrypted = pubKey.encrypt("Hello, world!");
-console.log(encrypted.toJSON());
-console.log("\n\n\n");
+let decrypted = rs.KJUR.crypto.Cipher.decrypt(encrypted, key);
+console.log(decrypted);
 
-// 私钥解密
-console.log("<><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
-console.log("<> Decrypted: Hello, world!");
-let decrypted = key.decrypt(encrypted);
-console.log(decrypted.toJSON());
-console.log(decrypted.toString('hex'));
-console.log(decrypted.toString());
-console.log("\n\n\n");
 
-// 查看钥匙对
-console.log("<><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
-console.log("<> KeyPair");
-console.log(key.keyPair);
-console.log("\n\n\n");
